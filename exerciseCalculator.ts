@@ -131,7 +131,13 @@ const calculateExercises = (workoutsHours: number[], dailyHourTarget: number): r
 
 try {
     const parsedArguments: number[] = parseArguments(process.argv);
-    const dailyHourTarget: number = parsedArguments.pop();
+    const dailyHourTarget: number = (() => {
+        const poppedElement = parsedArguments.pop();
+        if (poppedElement === undefined) {
+            throw new Error(`Last element in the parsedArguments array is undefined`);
+        }
+        return poppedElement;
+    })();
     const workoutsHours: number[] = parsedArguments;
     console.log(calculateExercises(workoutsHours, dailyHourTarget))
 } catch (error: unknown) {
