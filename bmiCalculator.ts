@@ -17,8 +17,8 @@
 //     }
 //   }
 
-const bmiMessage = (bmi: number) : String => {
-    let message: String = "";
+const bmiMessage = (bmi: number) : string => {
+    let message: string = "";
     switch(true) {
         case (bmi < 16):
             message = "Underweight (Severe thinness)";
@@ -42,16 +42,16 @@ const bmiMessage = (bmi: number) : String => {
             message = "Obese (Class II)";
             break;
         case (bmi >=40 ):
-            message = "Obese (Class III)"
+            message = "Obese (Class III)";
             break;
         default:
             throw new Error("bmiMessage switch case error");
-    };
+    }
 
     return message;
 };
 
-const calculateBmi = (height: number, weight: number) : String => {
+const calculateBmi = (height: number, weight: number) : string => {
     const heightInMeters = height/100;
 
     const heightInMetersSquare = heightInMeters * heightInMeters;
@@ -72,4 +72,4 @@ const calculateBmi = (height: number, weight: number) : String => {
 //     console.log(errorMessage);
 //   }
 
-export default calculateBmi
+export default calculateBmi;

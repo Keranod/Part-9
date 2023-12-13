@@ -3,17 +3,17 @@ interface results {
     trainingDays: number,
     success: boolean,
     rating: number,
-    ratingDescription: String,
+    ratingDescription: string,
     target: number,
     average: number
-};
+}
 
 const parseArguments = (args: string[]): number[] => {
     const argsLength = args.length;
 
-    let parsedArguments: number[] = [];
+    const parsedArguments: number[] = [];
     
-    let errorMessage: String = '';
+    let errorMessage: string = '';
 
     if (argsLength < 4) throw new Error('Not enough arguments');
 
@@ -31,7 +31,7 @@ const parseArguments = (args: string[]): number[] => {
     }
 
     return parsedArguments;
-}
+};
 
 const calculateExercises = (workoutsHours: number[], dailyHourTarget: number): results => {
     const periodLength: number = workoutsHours.length;
@@ -57,7 +57,7 @@ const calculateExercises = (workoutsHours: number[], dailyHourTarget: number): r
                 return;
             }
 
-        })
+        });
 
         return success;
     })();
@@ -69,7 +69,7 @@ const calculateExercises = (workoutsHours: number[], dailyHourTarget: number): r
         
         workoutsHours.forEach(element => {
             sum += element;
-        })
+        });
 
         return sum / periodLength;
     })();
@@ -100,8 +100,8 @@ const calculateExercises = (workoutsHours: number[], dailyHourTarget: number): r
         return rating;
     })();
 
-    const ratingDescription : String = (() => {
-        let message: String = ''
+    const ratingDescription : string = (() => {
+        let message: string = '';
         
         if (rating === 3) {
             message = 'Good job! Keep it up!';
@@ -139,9 +139,9 @@ try {
         return poppedElement;
     })();
     const workoutsHours: number[] = parsedArguments;
-    console.log(calculateExercises(workoutsHours, dailyHourTarget))
+    console.log(calculateExercises(workoutsHours, dailyHourTarget));
 } catch (error: unknown) {
-    let errorMessage = 'Something bad happened.'
+    let errorMessage = 'Something bad happened.';
     if (error instanceof Error) {
       errorMessage += ' Error: ' + error.message;
     }
