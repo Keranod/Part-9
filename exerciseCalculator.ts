@@ -8,30 +8,30 @@ interface results {
     average: number
 }
 
-const parseArguments = (args: string[]): number[] => {
-    const argsLength = args.length;
+// const parseArguments = (args: string[]): number[] => {
+//     const argsLength = args.length;
 
-    const parsedArguments: number[] = [];
+//     const parsedArguments: number[] = [];
     
-    let errorMessage: string = '';
+//     let errorMessage: string = '';
 
-    if (argsLength < 4) throw new Error('Not enough arguments');
+//     if (argsLength < 4) throw new Error('Not enough arguments');
 
-    for(let i = 2; i < argsLength; i++) {
-        if (!isNaN(Number(args[i]))) {
-            parsedArguments.push(Number(args[i]));
-        }
-        else {
-            errorMessage += `${i}, `;
-        }
-    }
+//     for(let i = 2; i < argsLength; i++) {
+//         if (!isNaN(Number(args[i]))) {
+//             parsedArguments.push(Number(args[i]));
+//         }
+//         else {
+//             errorMessage += `${i}, `;
+//         }
+//     }
 
-    if (errorMessage !== '') {
-        throw new Error(`Values no.: ${errorMessage}are not numbers!`);
-    }
+//     if (errorMessage !== '') {
+//         throw new Error(`Values no.: ${errorMessage}are not numbers!`);
+//     }
 
-    return parsedArguments;
-};
+//     return parsedArguments;
+// };
 
 const calculateExercises = (workoutsHours: number[], dailyHourTarget: number): results => {
     const periodLength: number = workoutsHours.length;
@@ -129,21 +129,23 @@ const calculateExercises = (workoutsHours: number[], dailyHourTarget: number): r
     return results;
 };
 
-try {
-    const parsedArguments: number[] = parseArguments(process.argv);
-    const dailyHourTarget: number = (() => {
-        const poppedElement = parsedArguments.pop();
-        if (poppedElement === undefined) {
-            throw new Error(`Last element in the parsedArguments array is undefined`);
-        }
-        return poppedElement;
-    })();
-    const workoutsHours: number[] = parsedArguments;
-    console.log(calculateExercises(workoutsHours, dailyHourTarget));
-} catch (error: unknown) {
-    let errorMessage = 'Something bad happened.';
-    if (error instanceof Error) {
-      errorMessage += ' Error: ' + error.message;
-    }
-    console.log(errorMessage);
-  }
+// try {
+//     const parsedArguments: number[] = parseArguments(process.argv);
+//     const dailyHourTarget: number = (() => {
+//         const poppedElement = parsedArguments.pop();
+//         if (poppedElement === undefined) {
+//             throw new Error(`Last element in the parsedArguments array is undefined`);
+//         }
+//         return poppedElement;
+//     })();
+//     const workoutsHours: number[] = parsedArguments;
+//     console.log(calculateExercises(workoutsHours, dailyHourTarget));
+// } catch (error: unknown) {
+//     let errorMessage = 'Something bad happened.';
+//     if (error instanceof Error) {
+//       errorMessage += ' Error: ' + error.message;
+//     }
+//     console.log(errorMessage);
+//   }
+
+export default calculateExercises;
