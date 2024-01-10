@@ -1,12 +1,19 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-import { NonSensitiveDiaryEntry } from './types';
+import { NonSensitiveDiaryEntry, NewDiaryEntry } from './types';
+
+import toNewDiaryEntry from './utils';
 
 const diariesUrl = '/api/diaries';
 
 function App() {
   const [diaries, setDiaries] = useState<NonSensitiveDiaryEntry[] | undefined>(undefined);
+
+  const [date, setDate] = useState<string>('');
+  const [visibility, setVisibility] = useState<string>('');
+  const [weather, setWeather] = useState<string>('');
+  const [comment, setComment] = useState<string>('');
 
   useEffect(() => {
     const fetchDiaries = async () => {
@@ -23,8 +30,96 @@ function App() {
     fetchDiaries();
   }, []);
 
+  const addDiary = async (newObject: NewDiaryEntry)  => {
+    try {
+      const response = await axios.post(diariesUrl, newObject);
+      setDiaries(diaries?.concat(response.data));
+    } catch (error) {
+      let message = 'Unknown Error'
+      if (error instanceof Error) message = error.message
+      reportError({message})
+    }
+  };
+
+  const addEntry = (event: React.SyntheticEvent) => {
+    event.preventDefault();
+
+    const diaryToAdd = {
+      date,
+      visibility,
+      weather,
+      comment
+    }
+
+    try {
+      const parsedEntry = toNewDiaryEntry(diaryToAdd);
+      addDiary(parsedEntry);
+
+      setDate('');
+      setVisibility('');
+      setWeather('');
+      setComment('');
+    } catch (error) {
+      let message = 'Unknown Error'
+      if (error instanceof Error) message = error.message
+      reportError({message})
+    }
+  }
+
   return (
     <div>
+      <h1>Add new entry</h1>
+
+      <form onSubmit={addEntry}>
+
+        <div>
+          date:
+          <input
+            id='date'
+            type='text'
+            value={date}
+            name='date'
+            onChange={({ target }) => {setDate(target.value)}}
+          />
+        </div>
+
+        <div>
+          visibility:
+          <input
+            id='visibility'
+            type='text'
+            value={visibility}
+            name='visibility'
+            onChange={({ target }) => {setVisibility(target.value)}}
+          />
+        </div>
+
+        <div>
+          weather:
+          <input
+            id='weather'
+            type='text'
+            value={weather}
+            name='weather'
+            onChange={({ target }) => {setWeather(target.value)}}
+          />
+        </div>
+
+        <div>
+          comment:
+          <input
+            id='comment'
+            type='text'
+            value={comment}
+            name='comment'
+            onChange={({ target }) => {setComment(target.value)}}
+          />
+        </div>
+
+        <button id='add' type='submit'>add</button>
+
+      </form>
+
       <h1>Diary entries</h1>
       {diaries !== undefined ? (
         diaries.length > 0 ? (
