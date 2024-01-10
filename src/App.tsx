@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 
-import { NonSensitiveDiaryEntry, NewDiaryEntry } from './types';
+import { NonSensitiveDiaryEntry, NewDiaryEntry, Weather, Visibility } from './types';
 
 import toNewDiaryEntry from './utils';
 
@@ -106,33 +106,41 @@ function App() {
           date:
           <input
             id='date'
-            type='text'
+            type='date'
             value={date}
             name='date'
             onChange={({ target }) => {setDate(target.value)}}
           />
         </div>
 
-        <div>
-          visibility:
-          <input
-            id='visibility'
-            type='text'
-            value={visibility}
-            name='visibility'
-            onChange={({ target }) => {setVisibility(target.value)}}
-          />
+        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px' }}>
+          <span>visibility:</span>
+          {Object.values(Visibility).map(v => (
+            <div key={v.toString()} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+              <input
+                type='radio'
+                name='visibilityFilter'
+                value={v.toString()}
+                onChange={() => setVisibility(v.toString())}
+              />
+              <label htmlFor={v.toString()}>{v.toString()}</label>
+            </div>
+          ))}
         </div>
 
-        <div>
-          weather:
-          <input
-            id='weather'
-            type='text'
-            value={weather}
-            name='weather'
-            onChange={({ target }) => {setWeather(target.value)}}
-          />
+        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px' }}>
+          <span>weather:</span>
+          {Object.values(Weather).map(w => (
+            <div key={w.toString()} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+              <input
+                type='radio'
+                name='weatherFilter'
+                value={w.toString()}
+                onChange={() => setWeather(w.toString())}
+              />
+              <label htmlFor={w.toString()}>{w.toString()}</label>
+            </div>
+          ))}
         </div>
 
         <div>
