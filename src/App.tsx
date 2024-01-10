@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 
 import { NonSensitiveDiaryEntry, NewDiaryEntry } from './types';
@@ -15,6 +15,9 @@ function App() {
   const [weather, setWeather] = useState<string>('');
   const [comment, setComment] = useState<string>('');
 
+  const [errorMessage, setErrorMessage] = useState<string>('');
+  const timeoutIdRef = useRef<number | null>(null);
+
   useEffect(() => {
     const fetchDiaries = async () => {
       try {
@@ -23,12 +26,31 @@ function App() {
       } catch (error) {
         let message = 'Unknown Error'
         if (error instanceof Error) message = error.message
-        reportError({message})
+        setErrorMessage(message)
       }
     };
 
     fetchDiaries();
   }, []);
+
+  useEffect(() => {
+    // Clear the existing timeout when a new error occurs
+    if (timeoutIdRef.current) {
+      clearTimeout(timeoutIdRef.current);
+    }
+
+    if (errorMessage === '') return;
+
+    timeoutIdRef.current = setTimeout(() => {
+      setErrorMessage('');
+    }, 5000);
+
+    return () => {
+      if (timeoutIdRef.current !== null) {
+        clearTimeout(timeoutIdRef.current);
+      }
+    };
+  },[errorMessage])
 
   const addDiary = async (newObject: NewDiaryEntry)  => {
     try {
@@ -37,7 +59,7 @@ function App() {
     } catch (error) {
       let message = 'Unknown Error'
       if (error instanceof Error) message = error.message
-      reportError({message})
+      setErrorMessage(message)
     }
   };
 
@@ -62,13 +84,21 @@ function App() {
     } catch (error) {
       let message = 'Unknown Error'
       if (error instanceof Error) message = error.message
-      reportError({message})
+      setErrorMessage(message)
     }
   }
 
   return (
     <div>
       <h1>Add new entry</h1>
+
+      <div>
+        {errorMessage !== '' ? (
+          <p style={{ color: 'red' }}>{errorMessage}</p>
+        ) : (
+          null
+        )}
+      </div>
 
       <form onSubmit={addEntry}>
 
