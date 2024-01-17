@@ -1,0 +1,15 @@
+POST http://localhost:3001/api/patients/d27736ec-f723-11e9-8f0b-362b9e155667/entries
+Content-Type: application/json
+
+{
+    "date": "2020-09-02",
+    "type": "OccupationalHealthcare",
+    "specialist": "Jola",
+    "diagnosisCodes": ["L60.1"],
+    "employerName": "M3",
+    "description": "Ok",
+    "sickLeave": {
+        "startDate": "2020-10-01",
+        "endDate": "2020-10-21"
+    }
+}

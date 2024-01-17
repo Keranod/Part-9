@@ -1,0 +1,14 @@
+POST http://localhost:3001/api/patients/d2773336-f723-11e9-8f0b-362b9e155667/entries
+Content-Type: application/json
+
+{
+    "date": "2019-09-02",
+    "type": "Hospital",
+    "specialist": "Jan",
+    "diagnosisCodes": ["S62.5","J06.9"],
+    "description": "He got shot",
+    "discharge": {
+      "date": "2019-10-16",
+      "criteria": "Foot has healed."
+    }
+}

@@ -1,5 +1,5 @@
 import patients from '../../data/patients';
-import { Patient, PatientWithoutSsn, NewPatient } from '../types';
+import { Patient, PatientWithoutSsn, NewPatient, EntryWithoutId, Entry } from '../types';
 import { v1 as uuid } from 'uuid';
 
 const id: string = uuid();
@@ -41,9 +41,32 @@ const addPatient = ( patient: NewPatient ): Patient => {
     return newPatient;
 };
 
+
+// somehow get which patient is going to have this entry added and how to add it to that 
+// patient entries list
+
+// send patient id as well as entry in the arguments
+const addEntry = ( patientId: string, entry: EntryWithoutId ): Entry => {
+    const newEntry: Entry = {
+        id,
+        ...entry
+    };
+
+    const patientIndex = Patients.findIndex((patient) => patient.id === patientId);
+
+    if (patientIndex !== -1) {
+        patients[patientIndex].entries.push(newEntry);
+
+        return newEntry;
+    }
+
+    throw new Error(`Patient with id ${patientId} not found.`);
+};
+
 export default {
     getPatients,
     getPatientsWithoutSsn,
     getPatientWithId,
-    addPatient
+    addPatient,
+    addEntry
 };
