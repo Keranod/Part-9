@@ -48,7 +48,7 @@ const addPatient = ( patient: NewPatient ): Patient => {
 // send patient id as well as entry in the arguments
 const addEntry = ( patientId: string, entry: EntryWithoutId ): Entry => {
     const newEntry: Entry = {
-        id,
+        id: uuid(),
         ...entry
     };
 
