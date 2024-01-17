@@ -9,6 +9,8 @@ import MedicalInformationIcon from '@mui/icons-material/MedicalInformation';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
+import AddNewEntry from "./AddNewEntry";
+
 import { Patient, Diagnosis, Entry } from "../../types";
 
 import patientService from "../../services/patients";
@@ -138,6 +140,12 @@ const PatientDetailsPage = () => {
             </h1>
             ssh: {patientWithId.ssn}<br/>
             occupation: {patientWithId.occupation}
+            <AddNewEntry 
+                diagnoses={diagnoses} 
+                patientId={patientWithId.id}
+                patient={patientWithId}
+                setPatient={setPatientWithId}
+            />
             <h2>entries</h2>
             {
                 patientWithId.entries.length === 0
